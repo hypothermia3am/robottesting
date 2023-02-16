@@ -8,10 +8,16 @@ class Robot(wp.TimedRobot):
         self.controller = wp.XboxController(0)
     
     def teleopPeriodic(self):
+       
         motorSpeed = self.controller.getRawAxis(1)
         motorTurnSpeed = self.controller.getRawAxis(0)
+        if motorSpeed < 0.05:
+            motorSpeed = 0
+        if motorTurnSpeed < 0.05:
+            motorTurnSpeed = 0
         self.motor.set(motorSpeed)
         self.turn.set(motorTurnSpeed)
 
+    
 if __name__ == '__main__':
     wp.run(Robot)
