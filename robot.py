@@ -1,5 +1,6 @@
 import wpilib as wp
 import rev
+import math
 
 class Robot(wp.TimedRobot):
     def robotInit(self):
@@ -11,6 +12,10 @@ class Robot(wp.TimedRobot):
     
     def teleopPeriodic(self):
        
+        y = self.controller.getRightY()
+        x = self.controller.getRightX()
+        angle = math.atan2(y, x) + math.pi
+        print(angle)
         motorSpeed = self.controller.getRawAxis(1)
         motorTurnSpeed = self.controller.getRawAxis(0)
         if motorSpeed < 0.05:
@@ -20,8 +25,7 @@ class Robot(wp.TimedRobot):
         self.motor.set(motorSpeed)
         self.turn.set(motorTurnSpeed)
     def robotPeriodic(self):
-        print(self.turnEnconder.getPosition())
-
+        pass
     
 if __name__ == '__main__':
     wp.run(Robot)
